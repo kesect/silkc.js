@@ -47,7 +47,7 @@ document.onmousemove = function(e) {
 	if (first) {
 		cursor.style.top = 0
 	}
-    let point = (Math.atan2(e.clientY - prevvy[0], e.clientX - prevvy[1]) * 50 + 90) - angle
+	let point = (Math.atan2(e.clientY - prevvy[0], e.clientX - prevvy[1]) * 50 + 90) - angle
 	prevvy = [e.clientY, e.clientX]
 	while (true) {
 		if (point < 180 & point > -180) {
