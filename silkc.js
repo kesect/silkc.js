@@ -4,6 +4,7 @@
 if (navigator.userAgentData.mobile) {
 	return
 }
+
 var stuff = []
 stuff[0] = document.createElementNS("http://www.w3.org/2000/svg", "svg")
 stuff[0].style = "pointer-events:none;top:-200px;position:fixed;left:0;z-index:9999999999999999999"
@@ -31,13 +32,19 @@ var angle = 0
 var first = true
 var prevvy = [0,0]
 var hovering = false
-  
-document.onmouseout = function() {
+
+document.onmouseout = function(e) {
+	if (e.target && e.target.matches("button,a,input")) {
+		hovering = false
+	}
     cursor.style.transform = "translate(calc(" + prevvy[1] + "px - 50%), calc(" + prevvy[0] + "px - 50%)) rotate(" + angle + "deg) scale(0)"
 	angle = 0
 }
 
-document.onmouseover = function() {
+document.onmouseover = function(e) {
+	if (e.target && e.target.matches("button,a,input")) {
+		hovering = true
+	}
 	if (angle !== 0) {
 		cursor.style.transform = "translate(calc(" + prevvy[1] + "px - 50%), calc(" + prevvy[0] + "px - 50%)) rotate(" + angle + "deg) scale(1)"
 	}
@@ -50,7 +57,7 @@ document.onmousemove = function(e) {
 	let point = (Math.atan2(e.clientY - prevvy[0], e.clientX - prevvy[1]) * 50 + 90) - angle
 	prevvy = [e.clientY, e.clientX]
 	while (true) {
-		if (point < 180 & point > -180) {
+		if (point < 180 && point > -180) {
 			angle = angle + point
 			break
 		}
@@ -77,22 +84,10 @@ document.onmousemove = function(e) {
 		}, 1)
 	}
 }
-  
-document.querySelectorAll("button,a,input").forEach(function(button) {
-	button.onmouseenter = function() {
-		hovering = true
-		stuff[2].setAttribute("stroke-width", "4")
-	}
-
-	button.onmouseleave = function() {
-		hovering = false
-		stuff[2].setAttribute("stroke-width", "3")
-	}
-})
 
 var removedefault = document.createElement("style")
 removedefault.textContent = "*{cursor:none !important}"
-document.head.appendChild(removedefault);
+document.head.appendChild(removedefault)
 
 if (!window.matchMedia("(prefers-color-scheme:dark)").matches) {
 	stuff[1].setAttribute("fill", "white")
