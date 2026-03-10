@@ -1,10 +1,6 @@
 // silkc.js
 
 (function() {
-if (navigator.userAgentData.mobile) {
-	return
-}
-
 var stuff = []
 stuff[0] = document.createElementNS("http://www.w3.org/2000/svg", "svg")
 stuff[0].style = "pointer-events:none;top:-200px;position:fixed;left:0;z-index:9999999999999999999"
